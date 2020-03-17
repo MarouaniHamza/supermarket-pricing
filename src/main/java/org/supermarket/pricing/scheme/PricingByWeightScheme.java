@@ -6,6 +6,7 @@ import org.supermarket.pricing.util.PricingUtil;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.OptionalDouble;
 
 public class PricingByWeightScheme implements PricingScheme {
 
@@ -14,7 +15,8 @@ public class PricingByWeightScheme implements PricingScheme {
         if(items == null || items.isEmpty()){
             throw new NoItemProvidedException(this);
         }
-        BigDecimal notScaledPrice = items.get(0).getPrice().multiply(items.get(0).getWeight());
+        OptionalDouble sumOfPrices = items.stream().mapToDouble(a -> a.getPrice().multiply(a.getWeight()).doubleValue()).reduce(Double::sum);
+        BigDecimal notScaledPrice = BigDecimal.valueOf(sumOfPrices.getAsDouble());
         return PricingUtil.scalePriceToTwoDecimalIfNecessary(notScaledPrice);
     }
 
