@@ -13,7 +13,7 @@ public class PricingByNumberScheme implements PricingScheme {
         if(items == null || items.isEmpty()){
             throw new NoItemProvidedException(this);
         }
-        throw new UnsupportedOperationException("Not yet implemented");
+        return items.get(0).getPrice();
     }
 
 }
