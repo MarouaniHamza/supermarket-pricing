@@ -13,7 +13,7 @@ public class PricingByNumberScheme implements PricingScheme {
         if(items == null || items.isEmpty()){
             throw new NoItemProvidedException(this);
         }
-        return items.get(0).getPrice();
+        return items.get(0).getPrice().multiply(BigDecimal.valueOf(items.size()));
     }
 
 }
