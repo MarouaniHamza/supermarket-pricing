@@ -18,17 +18,17 @@ public class PricingByWeightSchemeTest {
     private final PricingByWeightScheme pricingByWeightScheme = new PricingByWeightScheme();
 
     @Test(expected = NoItemProvidedException.class)
-    public void should_throw_NoItemProvidedException_if_null(){
+    public void should_throw_NoItemProvidedException_if_null() {
         pricingByWeightScheme.computePrice(null);
     }
 
     @Test(expected = NoItemProvidedException.class)
-    public void should_throw_NoItemProvidedException_if_empty_list(){
+    public void should_throw_NoItemProvidedException_if_empty_list() {
         pricingByWeightScheme.computePrice(Collections.emptyList());
     }
 
     @Test
-    public void should_return_price_multiplied_by_weight_when_one_item_provided(){
+    public void should_return_price_multiplied_by_weight_when_one_item_provided() {
         //given
         List<Item> items = Collections.singletonList(new Item("apples_bag", BigDecimal.valueOf(0.75), BigDecimal.valueOf(0.8537)));
         //when
@@ -38,7 +38,7 @@ public class PricingByWeightSchemeTest {
     }
 
     @Test
-    public void should_return_sum_of_price_multiplied_by_weight_when_many_items_provided(){
+    public void should_return_sum_of_price_multiplied_by_weight_when_many_items_provided() {
         //given
         List<Item> items = Arrays.asList(new Item("apples_bag", BigDecimal.valueOf(0.75), BigDecimal.valueOf(0.8537)),
                 new Item("soda_bottle", BigDecimal.valueOf(0.75), BigDecimal.valueOf(0.4252)),
@@ -46,7 +46,7 @@ public class PricingByWeightSchemeTest {
                 new Item("soda_bottle", BigDecimal.valueOf(0.75), BigDecimal.valueOf(2.7505)));
         //when
         BigDecimal price = pricingByWeightScheme.computePrice(items);
-        BigDecimal expectedPrice = BigDecimal.valueOf(0.75 *(0.8537+0.4252+1.2071+2.7505));
+        BigDecimal expectedPrice = BigDecimal.valueOf(0.75 * (0.8537 + 0.4252 + 1.2071 + 2.7505));
         //then
         assertEquals(expectedPrice.setScale(2, RoundingMode.UP), price);
     }

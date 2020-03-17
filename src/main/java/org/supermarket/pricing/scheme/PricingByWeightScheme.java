@@ -12,7 +12,7 @@ public class PricingByWeightScheme implements PricingScheme {
 
     public BigDecimal computePrice(List<Item> items) {
 
-        if(items == null || items.isEmpty()){
+        if (items == null || items.isEmpty()) {
             throw new NoItemProvidedException(this);
         }
         OptionalDouble sumOfPrices = items.stream().mapToDouble(a -> a.getPrice().multiply(a.getWeight()).doubleValue()).reduce(Double::sum);
