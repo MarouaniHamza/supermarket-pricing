@@ -6,6 +6,7 @@ import org.supermarket.pricing.model.Item;
 import org.supermarket.pricing.scheme.PricingByWeightScheme;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Collections;
 import java.util.List;
 
@@ -32,6 +33,6 @@ public class PricingByWeightSchemeTest {
         //when
         BigDecimal price = pricingByWeightScheme.computePrice(items);
         //then
-        assertEquals(BigDecimal.valueOf(0.75 * 0.8537), price);
+        assertEquals(BigDecimal.valueOf(0.75 * 0.8537).setScale(2, RoundingMode.UP), price);
     }
 }
