@@ -10,7 +10,7 @@ public class PricingByNumberScheme implements PricingScheme {
 
     public BigDecimal computePrice(List<Item> items) {
 
-        if(items == null){
+        if(items == null || items.isEmpty()){
             throw new NoItemProvidedException(this);
         }
         throw new UnsupportedOperationException("Not yet implemented");
