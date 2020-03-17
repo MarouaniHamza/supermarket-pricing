@@ -7,6 +7,7 @@ import org.supermarket.pricing.scheme.PricingByNumberScheme;
 import org.supermarket.pricing.scheme.PricingScheme;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -33,6 +34,19 @@ public class PricingByNumberSchemeTest {
         //when
         BigDecimal price = pricingByNumberScheme.computePrice(items);
         //then
-        assertEquals(price, BigDecimal.valueOf(1.5));
+        assertEquals(BigDecimal.valueOf(1.5), price);
+    }
+
+    @Test
+    public void should_return_price_multiplied_by_price_when_many_items_provided(){
+        //given
+        List<Item> items = Arrays.asList(new Item("soda_bottle", BigDecimal.valueOf(1.5), BigDecimal.valueOf(0.7)),
+                new Item("soda_bottle", BigDecimal.valueOf(1.5), BigDecimal.valueOf(0.7)),
+                new Item("soda_bottle", BigDecimal.valueOf(1.5), BigDecimal.valueOf(0.7)),
+                new Item("soda_bottle", BigDecimal.valueOf(1.5), BigDecimal.valueOf(0.7)));
+        //when
+        BigDecimal price = pricingByNumberScheme.computePrice(items);
+        //then
+        assertEquals(BigDecimal.valueOf(1.5 * 4), price);
     }
 }
