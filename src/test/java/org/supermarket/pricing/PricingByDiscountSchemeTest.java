@@ -19,40 +19,40 @@ public class PricingByDiscountSchemeTest {
 
     @Test(expected = NoItemProvidedException.class)
     public void should_throw_NoItemProvidedException_if_null() {
-        pricingByDiscountScheme = new PricingByDiscountScheme(3,1);
+        pricingByDiscountScheme = new PricingByDiscountScheme(3, 1);
         pricingByDiscountScheme.computePrice(null);
     }
 
     @Test(expected = NoItemProvidedException.class)
     public void should_throw_NoItemProvidedException_if_empty_list() {
-        pricingByDiscountScheme = new PricingByDiscountScheme(3,1);
+        pricingByDiscountScheme = new PricingByDiscountScheme(3, 1);
         pricingByDiscountScheme.computePrice(Collections.emptyList());
     }
 
     @Test
-    public void should_return_price_of_two_if_buy_three(){
+    public void should_return_price_of_two_if_buy_three() {
         //given
-        pricingByDiscountScheme = new PricingByDiscountScheme(3,1);
+        pricingByDiscountScheme = new PricingByDiscountScheme(3, 1);
         List<Item> items = Arrays.asList(new Item("soda_bottle", BigDecimal.valueOf(0.75), BigDecimal.valueOf(0.45)),
                 new Item("soda_bottle", BigDecimal.valueOf(0.75), BigDecimal.valueOf(0.45)),
                 new Item("soda_bottle", BigDecimal.valueOf(0.75), BigDecimal.valueOf(0.45)));
         //when
         BigDecimal price = pricingByDiscountScheme.computePrice(items);
         //then
-        assertEquals(BigDecimal.valueOf(0.75 * 2).setScale(2, RoundingMode.UP),price);
+        assertEquals(BigDecimal.valueOf(0.75 * 2).setScale(2, RoundingMode.UP), price);
     }
 
     @Test
-    public void should_return_price_of_items_when_buy_less_than_scheme(){
+    public void should_return_price_of_items_when_buy_less_than_scheme() {
         //given
-        pricingByDiscountScheme = new PricingByDiscountScheme(4,1);
+        pricingByDiscountScheme = new PricingByDiscountScheme(4, 1);
         List<Item> items = Arrays.asList(new Item("soda_bottle", BigDecimal.valueOf(0.75), BigDecimal.valueOf(0.45)),
                 new Item("soda_bottle", BigDecimal.valueOf(0.75), BigDecimal.valueOf(0.45)),
                 new Item("soda_bottle", BigDecimal.valueOf(0.75), BigDecimal.valueOf(0.45)));
         //when
         BigDecimal price = pricingByDiscountScheme.computePrice(items);
         //then
-        assertEquals(BigDecimal.valueOf(0.75 * 3).setScale(2, RoundingMode.UP),price);
+        assertEquals(BigDecimal.valueOf(0.75 * 3).setScale(2, RoundingMode.UP), price);
     }
 
 }

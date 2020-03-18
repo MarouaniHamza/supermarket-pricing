@@ -20,12 +20,24 @@ public class PricingByDiscountScheme implements PricingScheme {
 
     public BigDecimal computePrice(List<Item> items) {
 
-        if(items == null || items.isEmpty()){
+        if (items == null || items.isEmpty()) {
             throw new NoItemProvidedException(this);
         }
-        int numberOfAllFreeItems = (items.size() * numberOfItemsForFree)/ numberOfItemsToBuy;
-        BigDecimal priceOfAllFreeItems = BigDecimal.valueOf(numberOfAllFreeItems * items.get(0).getPrice().doubleValue());
-        BigDecimal priceOfAllItems = BigDecimal.valueOf(items.size() * items.get(0).getPrice().doubleValue());
+        int numberOfItems = items.size();
+        BigDecimal priceOfOneItem = items.get(0).getPrice();
+        if (numberOfItems < numberOfItemsToBuy) {
+            BigDecimal priceOfAllItems = BigDecimal.valueOf(numberOfItems * priceOfOneItem.doubleValue());
+            return PricingUtil.scalePriceToTwoDecimalIfNecessary(priceOfAllItems);
+        } else {
+            return computePriceForDiscountScheme(numberOfItems, priceOfOneItem);
+        }
+    }
+
+    private BigDecimal computePriceForDiscountScheme(int numberOfItems, BigDecimal priceOfOneItem) {
+
+        BigDecimal priceOfAllItems = BigDecimal.valueOf(numberOfItems * priceOfOneItem.doubleValue());
+        int numberOfAllFreeItems = (numberOfItems * numberOfItemsForFree) / numberOfItemsToBuy;
+        BigDecimal priceOfAllFreeItems = BigDecimal.valueOf(numberOfAllFreeItems * priceOfOneItem.doubleValue());
         BigDecimal notScaledPrice = priceOfAllItems.subtract(priceOfAllFreeItems);
         return PricingUtil.scalePriceToTwoDecimalIfNecessary(notScaledPrice);
     }
