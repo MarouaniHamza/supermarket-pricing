@@ -11,8 +11,11 @@ public class PricingByGroupScheme implements PricingScheme {
 
     private BigDecimal groupPrice;
 
-    public PricingByGroupScheme(BigDecimal groupPrice) {
+    private int groupSize;
+
+    public PricingByGroupScheme(BigDecimal groupPrice, int groupSize) {
         this.groupPrice = groupPrice;
+        this.groupSize = groupSize;
     }
 
     public BigDecimal computePrice(List<Item> items) {
@@ -21,9 +24,9 @@ public class PricingByGroupScheme implements PricingScheme {
             throw new NoItemProvidedException(this);
         }
         int numberOfItems = items.size();
-        if(numberOfItems > 3){
-            int numberOfTimesToApplyScheme = numberOfItems / 3;
-            int numberOfItemsOutOffScheme = numberOfItems % 3;
+        if(numberOfItems > groupSize){
+            int numberOfTimesToApplyScheme = numberOfItems / groupSize;
+            int numberOfItemsOutOffScheme = numberOfItems % groupSize;
             BigDecimal itemPrice = items.get(0).getPrice();
             BigDecimal notCountedItemsPrice = BigDecimal.valueOf(itemPrice.doubleValue() * numberOfItemsOutOffScheme);
             BigDecimal groupedItemPrice = groupPrice.multiply(BigDecimal.valueOf(numberOfTimesToApplyScheme));
@@ -39,5 +42,13 @@ public class PricingByGroupScheme implements PricingScheme {
 
     public void setGroupPrice(BigDecimal groupPrice) {
         this.groupPrice = groupPrice;
+    }
+
+    public int getGroupSize() {
+        return groupSize;
+    }
+
+    public void setGroupSize(int groupSize) {
+        this.groupSize = groupSize;
     }
 }
