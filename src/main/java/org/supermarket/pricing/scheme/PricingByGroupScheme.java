@@ -24,16 +24,19 @@ public class PricingByGroupScheme implements PricingScheme {
             throw new NoItemProvidedException(this);
         }
         int numberOfItems = items.size();
-        if(numberOfItems > groupSize){
+        BigDecimal itemPrice = items.get(0).getPrice();
+        if(numberOfItems >= groupSize){
             int numberOfTimesToApplyScheme = numberOfItems / groupSize;
             int numberOfItemsOutOffScheme = numberOfItems % groupSize;
-            BigDecimal itemPrice = items.get(0).getPrice();
             BigDecimal notCountedItemsPrice = BigDecimal.valueOf(itemPrice.doubleValue() * numberOfItemsOutOffScheme);
             BigDecimal groupedItemPrice = groupPrice.multiply(BigDecimal.valueOf(numberOfTimesToApplyScheme));
             BigDecimal notScaledPrice = notCountedItemsPrice.add(groupedItemPrice);
             return PricingUtil.scalePriceToTwoDecimalIfNecessary(notScaledPrice);
+        }else{
+            BigDecimal notScaledPrice = BigDecimal.valueOf(numberOfItems * itemPrice.doubleValue());
+            return PricingUtil.scalePriceToTwoDecimalIfNecessary(notScaledPrice);
         }
-        return PricingUtil.scalePriceToTwoDecimalIfNecessary(groupPrice);
+
     }
 
     public BigDecimal getGroupPrice() {
