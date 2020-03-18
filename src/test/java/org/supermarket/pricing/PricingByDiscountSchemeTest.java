@@ -6,6 +6,7 @@ import org.supermarket.pricing.model.Item;
 import org.supermarket.pricing.scheme.PricingByDiscountScheme;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -38,7 +39,7 @@ public class PricingByDiscountSchemeTest {
         //when
         BigDecimal price = pricingByDiscountScheme.computePrice(items);
         //then
-        assertEquals(BigDecimal.valueOf(0.75 * 2),price);
+        assertEquals(BigDecimal.valueOf(0.75 * 2).setScale(2, RoundingMode.UP),price);
     }
 
 }
