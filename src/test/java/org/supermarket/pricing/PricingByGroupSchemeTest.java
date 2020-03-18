@@ -97,4 +97,19 @@ public class PricingByGroupSchemeTest {
         // Then
         assertEquals(BigDecimal.valueOf(0.75 * 2).add(BigDecimal.valueOf(0.79 * 2)).setScale(2, RoundingMode.UP),price);
     }
+
+
+    @Test
+    public void should_return_the_price_multiplied_by_number_when_bought_items_are_less_than_scheme() {
+
+        // Given
+        pricingByGroupScheme = new PricingByGroupScheme(BigDecimal.valueOf(0.79),4);
+        List<Item> items = Arrays.asList(new Item("soda_bottle", BigDecimal.valueOf(0.75), BigDecimal.valueOf(0.45)),
+                new Item("soda_bottle", BigDecimal.valueOf(0.75), BigDecimal.valueOf(0.45)),
+                new Item("soda_bottle", BigDecimal.valueOf(0.75), BigDecimal.valueOf(0.45)));
+        // When
+        BigDecimal price = pricingByGroupScheme.computePrice(items);
+        // Then
+        assertEquals(BigDecimal.valueOf(0.79 * 3).setScale(2, RoundingMode.UP),price);
+    }
 }
