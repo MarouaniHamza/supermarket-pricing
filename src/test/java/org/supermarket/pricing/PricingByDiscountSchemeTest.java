@@ -55,4 +55,19 @@ public class PricingByDiscountSchemeTest {
         assertEquals(BigDecimal.valueOf(0.75 * 3).setScale(2, RoundingMode.UP), price);
     }
 
+    @Test
+    public void should_return_price_of_items_plus_difference_if_buy_more_than_scheme() {
+        //given
+        pricingByDiscountScheme = new PricingByDiscountScheme(4, 1);
+        List<Item> items = Arrays.asList(new Item("soda_bottle", BigDecimal.valueOf(0.75), BigDecimal.valueOf(0.45)),
+                new Item("soda_bottle", BigDecimal.valueOf(0.75), BigDecimal.valueOf(0.45)),
+                new Item("soda_bottle", BigDecimal.valueOf(0.75), BigDecimal.valueOf(0.45)),
+                new Item("soda_bottle", BigDecimal.valueOf(0.75), BigDecimal.valueOf(0.45)),
+                new Item("soda_bottle", BigDecimal.valueOf(0.75), BigDecimal.valueOf(0.45)));
+        //when
+        BigDecimal price = pricingByDiscountScheme.computePrice(items);
+        //then
+        assertEquals(BigDecimal.valueOf(0.75 * 4).setScale(2, RoundingMode.UP), price);
+    }
+
 }
