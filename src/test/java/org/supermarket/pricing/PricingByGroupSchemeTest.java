@@ -11,7 +11,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 
 public class PricingByGroupSchemeTest {
@@ -20,13 +19,13 @@ public class PricingByGroupSchemeTest {
 
     @Test(expected = NoItemProvidedException.class)
     public void should_throw_NoItemProvidedException_if_null() {
-        pricingByGroupScheme = new PricingByGroupScheme(BigDecimal.valueOf(1),3);
+        pricingByGroupScheme = new PricingByGroupScheme(BigDecimal.valueOf(1), 3);
         pricingByGroupScheme.computePrice(null);
     }
 
     @Test(expected = NoItemProvidedException.class)
     public void should_throw_NoItemProvidedException_if_empty_list() {
-        pricingByGroupScheme = new PricingByGroupScheme(BigDecimal.valueOf(1),3);
+        pricingByGroupScheme = new PricingByGroupScheme(BigDecimal.valueOf(1), 3);
         pricingByGroupScheme.computePrice(Collections.emptyList());
     }
 
@@ -34,21 +33,21 @@ public class PricingByGroupSchemeTest {
     public void should_return_the_price_when_buy_three_items_and_offer_is_three_for_one_price() {
 
         // Given
-        pricingByGroupScheme = new PricingByGroupScheme(BigDecimal.valueOf(1),3);
+        pricingByGroupScheme = new PricingByGroupScheme(BigDecimal.valueOf(1), 3);
         List<Item> items = Arrays.asList(new Item("soda_bottle", BigDecimal.valueOf(0.75), BigDecimal.valueOf(0.45)),
                 new Item("soda_bottle", BigDecimal.valueOf(0.75), BigDecimal.valueOf(0.45)),
                 new Item("soda_bottle", BigDecimal.valueOf(0.75), BigDecimal.valueOf(0.45)));
         // When
         BigDecimal price = pricingByGroupScheme.computePrice(items);
         // Then
-        assertEquals(BigDecimal.valueOf(1).setScale(1, RoundingMode.UP),price);
+        assertEquals(BigDecimal.valueOf(1).setScale(1, RoundingMode.UP), price);
     }
 
     @Test
     public void should_return_the_price_plus_difference_when_buy_more_items_and_offer_is_three_for_one_price() {
 
         // Given
-        pricingByGroupScheme = new PricingByGroupScheme(BigDecimal.valueOf(1),3);
+        pricingByGroupScheme = new PricingByGroupScheme(BigDecimal.valueOf(1), 3);
         List<Item> items = Arrays.asList(new Item("soda_bottle", BigDecimal.valueOf(0.75), BigDecimal.valueOf(0.45)),
                 new Item("soda_bottle", BigDecimal.valueOf(0.75), BigDecimal.valueOf(0.45)),
                 new Item("soda_bottle", BigDecimal.valueOf(0.75), BigDecimal.valueOf(0.45)),
@@ -56,14 +55,14 @@ public class PricingByGroupSchemeTest {
         // When
         BigDecimal price = pricingByGroupScheme.computePrice(items);
         // Then
-        assertEquals(BigDecimal.valueOf(1).add(BigDecimal.valueOf(0.75).setScale(2, RoundingMode.UP)),price);
+        assertEquals(BigDecimal.valueOf(1).add(BigDecimal.valueOf(0.75).setScale(2, RoundingMode.UP)), price);
     }
 
     @Test
     public void should_return_the_price_multiply_difference_plus_price_when_buy_more_items_and_offer_is_three_for_one_price() {
 
         // Given
-        pricingByGroupScheme = new PricingByGroupScheme(BigDecimal.valueOf(1),3);
+        pricingByGroupScheme = new PricingByGroupScheme(BigDecimal.valueOf(1), 3);
         List<Item> items = Arrays.asList(new Item("soda_bottle", BigDecimal.valueOf(0.75), BigDecimal.valueOf(0.45)),
                 new Item("soda_bottle", BigDecimal.valueOf(0.75), BigDecimal.valueOf(0.45)),
                 new Item("soda_bottle", BigDecimal.valueOf(0.75), BigDecimal.valueOf(0.45)),
@@ -74,14 +73,14 @@ public class PricingByGroupSchemeTest {
         // When
         BigDecimal price = pricingByGroupScheme.computePrice(items);
         // Then
-        assertEquals(BigDecimal.valueOf(0.75).add(BigDecimal.valueOf(2)).setScale(2, RoundingMode.UP),price);
+        assertEquals(BigDecimal.valueOf(0.75).add(BigDecimal.valueOf(2)).setScale(2, RoundingMode.UP), price);
     }
 
     @Test
     public void should_return_the_price_multiply_difference_plus_price_when_buy_more_items_and_offer_is_four_for_one_price() {
 
         // Given
-        pricingByGroupScheme = new PricingByGroupScheme(BigDecimal.valueOf(0.79),4);
+        pricingByGroupScheme = new PricingByGroupScheme(BigDecimal.valueOf(0.79), 4);
         List<Item> items = Arrays.asList(new Item("soda_bottle", BigDecimal.valueOf(0.75), BigDecimal.valueOf(0.45)),
                 new Item("soda_bottle", BigDecimal.valueOf(0.75), BigDecimal.valueOf(0.45)),
                 new Item("soda_bottle", BigDecimal.valueOf(0.75), BigDecimal.valueOf(0.45)),
@@ -95,7 +94,7 @@ public class PricingByGroupSchemeTest {
         // When
         BigDecimal price = pricingByGroupScheme.computePrice(items);
         // Then
-        assertEquals(BigDecimal.valueOf(0.75 * 2).add(BigDecimal.valueOf(0.79 * 2)).setScale(2, RoundingMode.UP),price);
+        assertEquals(BigDecimal.valueOf(0.75 * 2).add(BigDecimal.valueOf(0.79 * 2)).setScale(2, RoundingMode.UP), price);
     }
 
 
@@ -103,13 +102,13 @@ public class PricingByGroupSchemeTest {
     public void should_return_the_price_multiplied_by_number_when_bought_items_are_less_than_scheme() {
 
         // Given
-        pricingByGroupScheme = new PricingByGroupScheme(BigDecimal.valueOf(0.79),4);
+        pricingByGroupScheme = new PricingByGroupScheme(BigDecimal.valueOf(0.79), 4);
         List<Item> items = Arrays.asList(new Item("soda_bottle", BigDecimal.valueOf(0.75), BigDecimal.valueOf(0.45)),
                 new Item("soda_bottle", BigDecimal.valueOf(0.75), BigDecimal.valueOf(0.45)),
                 new Item("soda_bottle", BigDecimal.valueOf(0.75), BigDecimal.valueOf(0.45)));
         // When
         BigDecimal price = pricingByGroupScheme.computePrice(items);
         // Then
-        assertEquals(BigDecimal.valueOf(0.75 * 3).setScale(2, RoundingMode.UP),price);
+        assertEquals(BigDecimal.valueOf(0.75 * 3).setScale(2, RoundingMode.UP), price);
     }
 }
