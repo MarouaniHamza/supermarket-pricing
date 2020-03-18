@@ -74,6 +74,6 @@ public class PricingByGroupSchemeTest {
         // When
         BigDecimal price = pricingByGroupScheme.computePrice(items);
         // Then
-        assertEquals(BigDecimal.valueOf(1).add(BigDecimal.valueOf(0.75 * 2)).setScale(2, RoundingMode.UP),price);
+        assertEquals(BigDecimal.valueOf(0.75).add(BigDecimal.valueOf(2)).setScale(2, RoundingMode.UP),price);
     }
 }
