@@ -42,4 +42,19 @@ public class PricingByGroupSchemeTest {
         // Then
         assertEquals(BigDecimal.valueOf(1),price);
     }
+
+    @Test
+    public void should_return_the_price_plus_difference_when_buy_more_items_and_offer_is_three_for_one_price() {
+
+        // Given
+        pricingByGroupScheme = new PricingByGroupScheme(BigDecimal.valueOf(1));
+        List<Item> items = Arrays.asList(new Item("soda_bottle", BigDecimal.valueOf(0.75), BigDecimal.valueOf(0.45)),
+                new Item("soda_bottle", BigDecimal.valueOf(0.75), BigDecimal.valueOf(0.45)),
+                new Item("soda_bottle", BigDecimal.valueOf(0.75), BigDecimal.valueOf(0.45)),
+                new Item("soda_bottle", BigDecimal.valueOf(0.75), BigDecimal.valueOf(0.45)));
+        // When
+        BigDecimal price = pricingByGroupScheme.computePrice(items);
+        // Then
+        assertEquals(BigDecimal.valueOf(1).add(BigDecimal.valueOf(0.75)),price);
+    }
 }
