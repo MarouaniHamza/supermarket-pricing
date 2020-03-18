@@ -19,20 +19,20 @@ public class PricingByDiscountSchemeTest {
 
     @Test(expected = NoItemProvidedException.class)
     public void should_throw_NoItemProvidedException_if_null() {
-        pricingByDiscountScheme = new PricingByDiscountScheme();
+        pricingByDiscountScheme = new PricingByDiscountScheme(3,1);
         pricingByDiscountScheme.computePrice(null);
     }
 
     @Test(expected = NoItemProvidedException.class)
     public void should_throw_NoItemProvidedException_if_empty_list() {
-        pricingByDiscountScheme = new PricingByDiscountScheme();
+        pricingByDiscountScheme = new PricingByDiscountScheme(3,1);
         pricingByDiscountScheme.computePrice(Collections.emptyList());
     }
 
     @Test
     public void should_return_price_of_two_if_buy_three(){
         //given
-        pricingByDiscountScheme = new PricingByDiscountScheme();
+        pricingByDiscountScheme = new PricingByDiscountScheme(3,1);
         List<Item> items = Arrays.asList(new Item("soda_bottle", BigDecimal.valueOf(0.75), BigDecimal.valueOf(0.45)),
                 new Item("soda_bottle", BigDecimal.valueOf(0.75), BigDecimal.valueOf(0.45)),
                 new Item("soda_bottle", BigDecimal.valueOf(0.75), BigDecimal.valueOf(0.45)));
