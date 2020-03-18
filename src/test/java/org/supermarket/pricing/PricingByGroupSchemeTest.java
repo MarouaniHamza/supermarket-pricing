@@ -19,13 +19,13 @@ public class PricingByGroupSchemeTest {
 
     @Test(expected = NoItemProvidedException.class)
     public void should_throw_NoItemProvidedException_if_null() {
-        pricingByGroupScheme = new PricingByGroupScheme();
+        pricingByGroupScheme = new PricingByGroupScheme(BigDecimal.valueOf(1));
         pricingByGroupScheme.computePrice(null);
     }
 
     @Test(expected = NoItemProvidedException.class)
     public void should_throw_NoItemProvidedException_if_empty_list() {
-        pricingByGroupScheme = new PricingByGroupScheme();
+        pricingByGroupScheme = new PricingByGroupScheme(BigDecimal.valueOf(1));
         pricingByGroupScheme.computePrice(Collections.emptyList());
     }
 
@@ -33,7 +33,7 @@ public class PricingByGroupSchemeTest {
     public void should_return_the_price_when_buy_three_items_and_offer_is_three_for_one_price() {
 
         // Given
-        pricingByGroupScheme = new PricingByGroupScheme();
+        pricingByGroupScheme = new PricingByGroupScheme(BigDecimal.valueOf(1));
         List<Item> items = Arrays.asList(new Item("soda_bottle", BigDecimal.valueOf(0.75), BigDecimal.valueOf(0.45)),
                 new Item("soda_bottle", BigDecimal.valueOf(0.75), BigDecimal.valueOf(0.45)),
                 new Item("soda_bottle", BigDecimal.valueOf(0.75), BigDecimal.valueOf(0.45)));
