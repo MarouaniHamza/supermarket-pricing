@@ -20,6 +20,13 @@ public class PricingByGroupScheme implements PricingScheme {
         if(items == null || items.isEmpty()){
             throw new NoItemProvidedException(this);
         }
+        int numberOfItems = items.size();
+        if(numberOfItems > 3){
+            BigDecimal itemPrice = items.get(0).getPrice();
+            BigDecimal notCountedItemsPrice = BigDecimal.valueOf(itemPrice.doubleValue() * (numberOfItems - 3));
+            BigDecimal notScaledPrice = notCountedItemsPrice.add(groupPrice);
+            return PricingUtil.scalePriceToTwoDecimalIfNecessary(notScaledPrice);
+        }
         return PricingUtil.scalePriceToTwoDecimalIfNecessary(groupPrice);
     }
 
