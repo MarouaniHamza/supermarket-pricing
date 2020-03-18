@@ -6,6 +6,7 @@ import org.supermarket.pricing.model.Item;
 import org.supermarket.pricing.scheme.PricingByGroupScheme;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -55,6 +56,24 @@ public class PricingByGroupSchemeTest {
         // When
         BigDecimal price = pricingByGroupScheme.computePrice(items);
         // Then
-        assertEquals(BigDecimal.valueOf(1).add(BigDecimal.valueOf(0.75)),price);
+        assertEquals(BigDecimal.valueOf(1).add(BigDecimal.valueOf(0.75).setScale(2, RoundingMode.UP)),price);
+    }
+
+    @Test
+    public void should_return_the_price_multiply_difference_plus_price_when_buy_more_items_and_offer_is_three_for_one_price() {
+
+        // Given
+        pricingByGroupScheme = new PricingByGroupScheme(BigDecimal.valueOf(1));
+        List<Item> items = Arrays.asList(new Item("soda_bottle", BigDecimal.valueOf(0.75), BigDecimal.valueOf(0.45)),
+                new Item("soda_bottle", BigDecimal.valueOf(0.75), BigDecimal.valueOf(0.45)),
+                new Item("soda_bottle", BigDecimal.valueOf(0.75), BigDecimal.valueOf(0.45)),
+                new Item("soda_bottle", BigDecimal.valueOf(0.75), BigDecimal.valueOf(0.45)),
+                new Item("soda_bottle", BigDecimal.valueOf(0.75), BigDecimal.valueOf(0.45)),
+                new Item("soda_bottle", BigDecimal.valueOf(0.75), BigDecimal.valueOf(0.45)),
+                new Item("soda_bottle", BigDecimal.valueOf(0.75), BigDecimal.valueOf(0.45)));
+        // When
+        BigDecimal price = pricingByGroupScheme.computePrice(items);
+        // Then
+        assertEquals(BigDecimal.valueOf(1).add(BigDecimal.valueOf(0.75 * 2)).setScale(2, RoundingMode.UP),price);
     }
 }
